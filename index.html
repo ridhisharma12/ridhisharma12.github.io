@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ridhi Sharma - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6493c5;
+            --primary-light: #8daccb;
+            --secondary: #ffb6c1;
+            --tertiary: #a5dda5;
+            --accent: #ffe999;
+            --background: #f5f8ff;
+            --text: #273555; /* Increased contrast */
+            --card-bg: #ffffff;
+            --border-radius: 20px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f8ff 0%, #f0f7ff 50%, #e8f4ff 100%);
+            color: var(--text);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Decorative Elements */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent) 0%, rgba(255,233,153,0) 70%);
+            opacity: 0.6;
+            z-index: -1;
+        }
+        
+        body::after {
+            content: "";
+            position: fixed;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--secondary) 0%, rgba(255,182,193,0) 70%);
+            opacity: 0.4;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(148, 194, 243, 0.3);
+        }
+        
+        .profile-pic::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--secondary), var(--tertiary), var(--accent), var(--primary));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.6;
+            animation: rotateBorder 10s linear infinite;
+        }
+        
+        @keyframes rotateBorder {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links a {
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            transform: scale(1.2);
+        }
+        
+        .tab-container {
+            margin-bottom: 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-btn::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            border-radius: 4px;
+            transform: scaleX(0);
+            transform-origin: 0 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(148, 194, 243, 0.4);
+        }
+        
+        .tab-btn.active::before {
+            transform: scaleX(1);
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background-color: var(--primary-light);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .tab-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(165, 221, 165, 0.2) 0%, rgba(165, 221, 165, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .tab-content::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.15) 0%, rgba(255, 182, 193, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Nested tabs styling */
+        .nested-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .nested-tab-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--background);
+            border: 1px solid var(--primary-light);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .nested-tab-btn.active {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        
+        .nested-tab-content {
+            display: none;
+            padding: 1.5rem;
+            background-color: var(--background);
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+        
+        .nested-tab-content.active {
+            display: block;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent);
+            opacity: 0.3;
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.3s;
+        }
+        
+        .card:nth-child(2n)::before {
+            background-color: var(--secondary);
+        }
+        
+        .card:nth-child(3n)::before {
+            background-color: var(--tertiary);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card:hover::before {
+            transform: scale(1.5);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .card p {
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(148, 194, 243, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(148, 194, 243, 0.4);
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        .contact-info {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .linkedin-preview {
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            margin-bottom: 2rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+        
+        /* Decorative elements */
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .decoration-1 {
+            top: 10%;
+            right: 5%;
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent);
+            transform: translateY(-20px);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .decoration-2 {
+            top: 30%;
+            left: 5%;
+            width: 60px;
+            height: 60px;
+            background-color: var(--tertiary);
+            animation: float 7s ease-in-out infinite 1s;
+        }
+        
+        .decoration-3 {
+            bottom: 10%;
+            right: 10%;
+            width: 70px;
+            height: 70px;
+            background-color: var(--secondary);
+            animation: float 9s ease-in-out infinite 2s;
+        }
+        /* Add these to your CSS styles section */
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        .gallery-img {
+            width: 100%;
+            max-width: 800px; /* Maximum width to prevent extremely large images */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            object-fit: contain; /* Ensures the entire image is visible */
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-img {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .decoration {
+                display: none;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    <div class="decoration decoration-3"></div>
+    
+    <div class="container">
+        <header>
+            <img src="link2.jpg" alt="Profile Picture" class="profile-pic">
+            <h1>RIDHI SHARMA</h1>
+            <p class="tagline">GARMENT INDUSTRY ANALYST | NIFT Mumbai</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/ridhi-sharma-ba6295209" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </header>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="about">About Me</button>
+                <button class="tab-btn" data-tab="resume">Resume</button>
+                <button class="tab-btn" data-tab="experience">Experience</button>
+                <button class="tab-btn" data-tab="research">Studies</button>
+                <button class="tab-btn" data-tab="projects">Projects</button>
+                <button class="tab-btn" data-tab="contact">Contact Me</button>
+            </div>
+            
+            <div id="about" class="tab-content active">
+                <h2>About Me</h2>
+                <p>Welcome to my personal portfolio! I am a Fashion Technologist specializing in digital solutions for garment manufacturing. With experience in AI-powered systems, I am passionate about Industry 4.0 and data-driven solutions.</p>
+                <p>My background includes developing real-time optimization and prediction models for system performance enhancement, dynamic task management, and workload reallocation. I've worked with various technologies and tools to integrate smart factory innovations for enhanced apparel production performance.</p>
+                <p>I am currently pursuing my B.FTECH degree at National Institute of Fashion Technology, Mumbai while seeking opportunities to apply my skills in the garment industry.</p>
+                
+                <h3>Skills</h3>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Technical Skills</h3>
+                            <p>Python, SQL, HTML, CSS, JavaScript basics, Machine learning basics, Algorithm development, System Design, IoT development</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Industry Skills</h3>
+                            <p>Apparel Industrial Engineering, Manufacturing management, Lean Manufacturing, Production forecasting, Line balancing, Process optimization</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Tools & Technologies</h3>
+                            <p>Figma, Excel, Google Sheet automation, AI-powered systems, Predictive analytics </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="resume" class="tab-content">
+                <h2>Resume</h2>
+                <p>Here you can view and download my resume.</p>
+                <div style="margin: 2rem 0; text-align: center;">
+                    <img src="Ridhi Sharma-Resume.jpg" alt="Ridhi Sharma Resume" style="max-width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);">
+                </div>
+                <div style="text-align: center;">
+                    <a href="Ridhi Sharma resume.pdf" class="btn" download>Download Resume (PDF)</a>
+                </div>
+            </div>
+
+            <div id="experience" class="tab-content">
+                <h2>Professional Experience</h2>
+                
+                <div class="nested-tabs">
+                    <button class="nested-tab-btn active" data-nested-tab="predigital">Pre-Digital Twin - GP</button>
+                    <button class="nested-tab-btn" data-nested-tab="brandix">Brandix India</button>
+                    <button class="nested-tab-btn" data-nested-tab="amazon">Amazon Seller</button>
+                    <button class="nested-tab-btn" data-nested-tab="shingora">Shingora Textiles</button>
+                    <button class="nested-tab-btn" data-nested-tab="nift">NIFT Cultural Club</button>
+                    <button class="nested-tab-btn" data-nested-tab="amazon-old">Amazon Seller (2021)</button>
+                </div>
+                
+                <!-- Replace the entire predigital nested-tab-content div with this -->
+                <div id="predigital" class="nested-tab-content active">
+                    <h3>Aquarelle India Pvt. Ltd. - Graduation Project (4 months, 2025)</h3>
+                    
+                    <div class="content-section">
+                        <h4>About the Project</h4>
+                        <p>Developed an AI-powered Pre-Digital Twin system for real-time operator allocation, automated line balancing, and production forecasting in apparel manufacturing, leveraging machine learning, predictive analytics, and workflow optimization.</p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h4>Production Prediction</h4>
+                        <p>Achieved a prediction accuracy of 86% and reduced human dependency by algorithmic work assignment, enabling precise forecasts of production outputs based on historical data and real-time factors.</p>
+                        <div class="image-gallery">
+                            <img src="Production prediction_img/1.jpg" alt="Production Prediction 1" class="gallery-img">
+                            <img src="Production prediction_img/2.jpg" alt="Production Prediction 2" class="gallery-img">
+                            <img src="Production prediction_img/3.jpg" alt="Production Prediction 3" class="gallery-img">
+                            <img src="Production prediction_img/4.jpg" alt="Production Prediction 4" class="gallery-img">
+                            <img src="Production prediction_img/5.jpg" alt="Production Prediction 5" class="gallery-img">
+                            <img src="Production prediction_img/6.jpg" alt="Production Prediction 6" class="gallery-img">
+                            <img src="Production prediction_img/7.jpg" alt="Production Prediction 7" class="gallery-img">
+                        </div>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h4>Digital Line Balancing</h4>
+                        <p>Created an integrated dashboard for to-and-fro information access to take action on inefficiencies, allowing supervisors to optimize line performance dynamically based on real-time data.</p>
+                        <div class="image-gallery">
+                            <img src="line_balancing_img/1.jpg" alt="Line Balancing 1" class="gallery-img">
+                            <img src="line_balancing_img/2.jpg" alt="Line Balancing 2" class="gallery-img">
+                            <img src="line_balancing_img/3.jpg" alt="Line Balancing 3" class="gallery-img">
+                            <img src="line_balancing_img/4.jpg" alt="Line Balancing 4" class="gallery-img">
+                            <img src="line_balancing_img/5.jpg" alt="Line Balancing 5" class="gallery-img">
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="brandix" class="nested-tab-content">
+                    <h3>Brandix India Pvt. Ltd (2 months, 2024)</h3>
+                    <p>Worked in a team and implemented NEXERA solutions on sewing floor, enhancing real-time monitoring and efficiency. Increased production efficiency by 8% through material flow analysis, layout analysis and process streamlining.</p>
+                </div>
+                
+                <div id="amazon" class="nested-tab-content">
+                    <h3>Seller on Amazon (3 months, 2024)</h3>
+                    <p>Launched and managed a jewelry Amazon store, handling end-to-end operations including product listing, pricing, and order fulfillment. Gained a profit of 32% through advertisements and competitive pricing.</p>
+                    <a href="https://www.linkedin.com/posts/ridhi-sharma-ba6295209_pristinevarnam-jewelryonamazon-amazonseller-activity-7259950160670044160-ufQ4?utm_source=share&utm_medium=member_desktop&rcm=ACoAADTmqW4BwyUtmcZPLVRjGAcwvVpHHDZpFRE" class="btn" download>View</a>
+                </div>
+                
+                <div id="shingora" class="nested-tab-content">
+                    <h3>Textile internship at Shingora Textiles, Ludhiana (Observational internship, 2023)</h3>
+                    <p>Completed an observational internship at Shingora Textiles in Ludhiana, gaining insights into textile manufacturing processes, quality control, and production management.</p>
+                </div>
+                
+                <div id="nift" class="nested-tab-content">
+                    <h3>NIFT Cultural Club Design Head and Event Management (2023)</h3>
+                    <p>Served as Design Head for NIFT Cultural Club, responsible for creating visual assets and managing events. Led a team in designing promotional materials and coordinating cultural activities.</p>
+                </div>
+                
+                <div id="amazon-old" class="nested-tab-content">
+                    <h3>Seller on Amazon (6 months, 2021)</h3>
+                    <p>Successfully launched and managed an sportswear store on Amazon, achieving a 40% profit margin through competitive pricing and customer connection building.</p>
+
+                    
+                </div>
+            </div>
+            
+            <div id="research" class="tab-content">
+                <h2>Studies</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Low Cost Automation for SMEs</h3>
+                            <p>A detailed study on cost-effective automation solutions for Small and Medium Enterprises in the garment manufacturing sector.</p>
+                            <a href="https://www.linkedin.com/posts/ridhi-sharma-ba6295209_garmentmanufacturing-sewingtechnology-needlepositioner-activity-7265688146309206017-GtMJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAADTmqW4BwyUtmcZPLVRjGAcwvVpHHDZpFRE" class="btn" target="_blank">View</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Smart Haptic Feedback Systems</h3>
+                            <p>Development of a posture correction smart t-shirt that gives haptic feedback on detecting ill posture.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Crowd Identification Systems</h3>
+                            <p>Image recognition Landing AI project for crowd identification and analysis.</p>
+                            <a href="https://www.linkedin.com/posts/ridhi-sharma-ba6295209_ai-machinelearning-computervision-activity-7288497186164633601-KIDE?utm_source=share&utm_medium=member_desktop&rcm=ACoAADTmqW4BwyUtmcZPLVRjGAcwvVpHHDZpFRE" class="btn" target="_blank">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="projects" class="tab-content">
+                <h2>Projects</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>AI-Powered Pre-Digital Twin System</h3>
+                            <p>Developed a real-time operator allocation system for apparel manufacturing with 86% prediction accuracy.</p>
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>IOT Enabled Machine Maintenance System</h3>
+                            <p>Worked in a team of 4 and built a self-operated IOT enabled machine maintenance system for preventive maintenance.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Posture Correction Smart T-Shirt</h3>
+                            <p>Developed a wearable technology that provides haptic feedback when detecting incorrect posture.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="contact" class="tab-content">
+                <h2>Contact Me</h2>
+                <div class="contact-info">
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>ridhisharma1202@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mumbai, India</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>LinkedIn Profile</h2>
+                <div class="linkedin-preview">
+                    <img src="Capture_linkedin.PNG" alt="LinkedIn Preview" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 1rem;">
+                    <h3>Ridhi Sharma</h3>
+                    <p>Garment Industry Data Analyst | NIFT Mumbai</p>
+                    <p>Fashion technologist specializing in digital solutions for garment manufacturing, optimizing resource allocation using automation. Passionate about Industry 4.0, data-driven solutions, and integrating smart factory innovations.</p>
+                    <a href="https://www.linkedin.com/in/ridhi-sharma-ba6295209" class="btn" target="_blank">Visit LinkedIn Profile</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 Ridhi Sharma. All Rights Reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Helper function to manage tab activation
+            function activateTab(container, selector, activeClass) {
+                // Remove active class from all tabs/contents
+                container.querySelectorAll(selector).forEach(el => el.classList.remove(activeClass));
+            }
+
+            // Main Tab Navigation
+            const mainTabBtns = document.querySelectorAll('.tab-btn');
+            
+            mainTabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Deactivate all main tabs
+                    activateTab(document, '.tab-btn', 'active');
+                    activateTab(document, '.tab-content', 'active');
+                    
+                    // Activate clicked tab
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+
+                    // If Experience tab is clicked, ensure first nested tab is active
+                    if (tabId === 'experience') {
+                        const firstNestedTab = document.querySelector('.nested-tab-btn[data-nested-tab="predigital"]');
+                        if (firstNestedTab) {
+                            firstNestedTab.click(); // Simulate click to trigger nested tab logic
+                        }
+                    }
+                });
+            });
+
+            // Nested Tab Navigation
+            const nestedTabBtns = document.querySelectorAll('.nested-tab-btn');
+            
+            nestedTabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const nestedTabId = this.getAttribute('data-nested-tab');
+                    const experienceTab = document.getElementById('experience');
+                    
+                    // Deactivate all nested tabs in this section
+                    activateTab(experienceTab, '.nested-tab-btn', 'active');
+                    activateTab(experienceTab, '.nested-tab-content', 'active');
+                    
+                    // Activate clicked nested tab
+                    this.classList.add('active');
+                    const nestedTabContent = experienceTab.querySelector(`#${nestedTabId}`);
+                    
+                    if (nestedTabContent) {
+                        nestedTabContent.classList.add('active');
+                    }
+                });
+            });
+
+            // Sub-Tab Navigation
+            const subTabBtns = document.querySelectorAll('[data-sub-tab]');
+            
+            subTabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const subTabId = this.getAttribute('data-sub-tab');
+                    const parentNestedTab = this.closest('.nested-tab-content');
+                    
+                    // Deactivate all sub-tabs in this nested tab
+                    activateTab(parentNestedTab, '[data-sub-tab]', 'active');
+                    activateTab(parentNestedTab, '.nested-tab-content', 'active');
+                    
+                    // Activate clicked sub-tab
+                    this.classList.add('active');
+                    const subTabContent = parentNestedTab.querySelector(`#${subTabId}`);
+                    
+                    if (subTabContent) {
+                        subTabContent.classList.add('active');
+                    }
+                });
+            });
+
+            // Initial setup for Experience tab
+            const initialExperienceTab = document.querySelector('.tab-btn[data-tab="experience"]');
+            if (initialExperienceTab) {
+                initialExperienceTab.click(); // This will trigger the nested tab and sub-tab activation
+            }
+        });
+    </script>
+</body>
+</html>
